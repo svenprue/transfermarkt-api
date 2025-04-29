@@ -19,20 +19,21 @@ $ git clone https://github.com/felipeall/transfermarkt-api.git
 # Go to the project's root folder
 $ cd transfermarkt-api
 
-# Instantiate a Poetry virtual env
-$ poetry shell
+# Activate Python environment
+$ python -m venv .venv
+$ .venv\Scripts\activate  # On Windows
+# $ source .venv/bin/activate  # On Unix/macOS
 
-# Install the dependencies
+# Set up Poetry environment
+$ poetry env use python
 $ poetry install --no-root
 
-# (optional) Append the current directory to PYTHONPATH
-$ export PYTHONPATH=$PYTHONPATH:$(pwd)
-
 # Start the API server
-$ python app/main.py
+$ poetry run uvicorn app.main:app --reload
 
 # Access the API local page
-$ open http://localhost:8000/
+$ open http://localhost:8000/  # On macOS
+# Or navigate to http://localhost:8000/ in your browser
 ````
 
 ### Running via Docker

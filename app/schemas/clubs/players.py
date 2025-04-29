@@ -24,4 +24,5 @@ class ClubPlayer(TransfermarktBaseModel):
 
 class ClubPlayers(TransfermarktBaseModel, AuditMixin):
     id: str
+    is_national: bool
     players: list[ClubPlayer]
