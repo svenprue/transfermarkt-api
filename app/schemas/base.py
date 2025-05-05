@@ -31,7 +31,9 @@ class TransfermarktBaseModel(BaseModel):
         mode="before",
         check_fields=False,
     )
-    def parse_str_to_date(cls, v: str):
+    def parse_str_to_date(cls, v):
+        if v is None:
+            return None
         try:
             return parser.parse(v).date() if v else None
         except parser.ParserError:
@@ -39,6 +41,8 @@ class TransfermarktBaseModel(BaseModel):
 
     @field_validator("points_per_game", mode="before", check_fields=False)
     def parse_str_to_float(cls, v: str) -> Optional[float]:
+        if v is None:
+            return None
         if not v or not any(char.isdigit() for char in v):
             return None
         try:
@@ -66,7 +70,9 @@ class TransfermarktBaseModel(BaseModel):
         mode="before",
         check_fields=False,
     )
-    def parse_str_to_int(cls, v: str) -> Optional[int]:
+    def parse_str_to_int(cls, v) -> Optional[int]:
+        if v is None:
+            return None
         if not v or not any(char.isdigit() for char in v):
             return None
 
@@ -95,12 +101,16 @@ class TransfermarktBaseModel(BaseModel):
         mode="before",
         check_fields=False
     )
-    def parse_height(cls, v: str) -> Optional[int]:
+    def parse_height(cls, v) -> Optional[int]:
+        if v is None:
+            return None
         if not v or not any(char.isdigit() for char in v):
             return None
         return int(v.replace(",", "").replace("m", "").replace("،", ""))
 
     @field_validator("days", "time_in_office", mode="before", check_fields=False)
-    def parse_days(cls, v: str) -> Optional[int]:
+    def parse_days(cls, v) -> Optional[int]:
+        if v is None:
+            return None
         days = "".join(filter(str.isdigit, v))
         return int(days) if days else None
